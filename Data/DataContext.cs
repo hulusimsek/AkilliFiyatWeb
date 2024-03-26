@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AkilliFiyatWeb.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AkilliFiyatWeb.Data
@@ -10,7 +11,8 @@ namespace AkilliFiyatWeb.Data
     {
         public DataContext(DbContextOptions<DataContext> options): base(options)
         {
-
+            
         }
+        public DbSet<Urunler> Urunler =>  Set<Urunler>();
     }
 }

@@ -46,3 +46,48 @@ button.accept-policy[b-glt0003ngh] {
   white-space: nowrap;
   line-height: 60px;
 }
+
+
+@media (min-width: 768px) {
+
+  /* show 3 items */
+  .carousel-inner .active[b-glt0003ngh],
+  .carousel-inner .active + .carousel-item[b-glt0003ngh],
+  .carousel-inner .active + .carousel-item + .carousel-item[b-glt0003ngh],
+  .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item[b-glt0003ngh]  {
+      display: block;
+  }
+  
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left)[b-glt0003ngh],
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item[b-glt0003ngh],
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item[b-glt0003ngh],
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item[b-glt0003ngh] {
+      transition: none;
+  }
+  
+  .carousel-inner .carousel-item-next[b-glt0003ngh],
+  .carousel-inner .carousel-item-prev[b-glt0003ngh] {
+    position: relative;
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item[b-glt0003ngh] {
+      position: absolute;
+      top: 0;
+      right: -25%;
+      z-index: -1;
+      display: block;
+      visibility: visible;
+  }
+  
+  /* left or forward direction */
+  .active.carousel-item-left + .carousel-item-next.carousel-item-left[b-glt0003ngh],
+  .carousel-item-next.carousel-item-left + .carousel-item[b-glt0003ngh],
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item[b-glt0003ngh],
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item[b-glt0003ngh],
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item[b-glt0003ngh] {
+      position: relative;
+      transform: translate3d(-100%, 0, 0);
+      visibility: visible;
+  }
+}

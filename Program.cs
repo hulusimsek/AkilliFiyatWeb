@@ -1,4 +1,5 @@
 using AkilliFiyatWeb.Data;
+using AkilliFiyatWeb.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,14 @@ builder.Services.AddDbContext<DataContext>(options =>
     var version = new MySqlServerVersion(new Version(8, 0, 30));
     options.UseMySql(connectionString, version);
 });
+
+builder.Services.AddHttpClient();
+
+    // ApiService ekleyin
+    builder.Services.AddHostedService<NightlyTaskService>();
+builder.Services.AddScoped<ApiService>();
+builder.Services.AddScoped<MigrosIndirimUrunServices>();
+builder.Services.AddScoped<CarfoursaIndirimUrunServices>();
 
 var app = builder.Build();
 

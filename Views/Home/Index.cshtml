@@ -1,8 +1,142 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<Urunler>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- Sol Taraftaki Search Bar -->
+                <input type="text" class="form-control" placeholder="Ara...">
+            </div>
+            <div class="col-lg-8">
+                <!-- Sağ Taraftaki Carousel -->
+                <div id="multipleItemCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @{
+                            var products = Model.Where(p => p.MarketAdi == "migros").ToList();
+                            for (int i = 0; i < products.Count; i += 3)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2">
+                                        @for (int j = i; j < Math.Min(i + 3, products.Count); j++)
+                                        {
+                                            var product = products[j];
+                                            <div class="col">
+                                                <div class="card mb-3" style="width: 250px; height: 350px;">
+                                                    <div class="market-logo">
+                                                        <img src="@product.MarketResmi" alt="@product.MarketAdi" class="market-logo-img">
+                                                    </div>
+                                                    <img src="@product.UrunResmi" class="card-img-top" alt="@product.UrunAdi">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@product.UrunAdi</h5>
+                                                        <p class="card-text"><del>@product.EskiFiyat</del></p>
+                                                        <p class="card-text">@product.Fiyat</p>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <a href="#" class="btn btn-sm btn-primary">Sepete Ekle</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#multipleItemCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#multipleItemCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- Sol Taraftaki Search Bar -->
+            
+            </div>
+            <div class="col-lg-8">
+                <!-- Sağ Taraftaki Carousel -->
+                <div id="multipleItemCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @{
+                            var products2 = Model.Where(p => p.MarketAdi == "carfoursa").ToList();
+                            for (int i = 0; i < products2.Count; i += 3)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2">
+                                        @for (int j = i; j < Math.Min(i + 3, products2.Count); j++)
+                                        {
+                                            var product2 = products2[j];
+                                            <div class="col">
+                                                <div class="card mb-3" style="width: 250px; height: 350px;">
+                                                    <div class="market-logo">
+                                                        <img src="@product2.MarketResmi" alt="@product2.MarketAdi" class="market-logo-img">
+                                                    </div>
+                                                    <img src="@product2.UrunResmi" class="card-img-top" alt="@product2.UrunAdi">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@product2.UrunAdi</h5>
+                                                        <p class="card-text"><del>@product2.EskiFiyat</del></p>
+                                                        <p class="card-text">@product2.Fiyat</p>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <a href="#" class="btn btn-sm btn-primary">Sepete Ekle</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#multipleItemCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#multipleItemCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        .market-logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            padding: 5px;
+        }
+    
+        .market-logo-img {
+            width: 30px;
+            height: auto;
+        }
+    
+        .card-img-top {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+    
+        .card-body {
+            height: 100px; /* Kart içeriğinin yüksekliği */
+            overflow: hidden; /* İçeriğin taşmasını engeller */
+        }
+    
+        .card-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+    

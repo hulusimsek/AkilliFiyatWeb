@@ -1,31 +1,27 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AkilliFiyatWeb.Models;
+using AkilliFiyatWeb.Services;
+using AkilliFiyatWeb.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AkilliFiyatWeb.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly MigrosIndirimUrunServices _migrosIndirimUrunServices;
+    private readonly DataContext _dataContext;
 
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
+    [ActivatorUtilitiesConstructor]
+        public HomeController(MigrosIndirimUrunServices migrosIndirimUrunServices, DataContext dataContext)
+        {
+            _migrosIndirimUrunServices = migrosIndirimUrunServices;
+            _dataContext = dataContext;
+        }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var urunler = await _dataContext.Urunler.ToListAsync();
+        return View(urunler);
     }
 }
