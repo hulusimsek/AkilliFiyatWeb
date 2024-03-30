@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AkilliFiyatWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb2ecc68a29c861a7daee97ac606e95f4a285abb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86878a14e65319854b32c8918620e66d6b7765f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("AkilliFiyatWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AkilliFiyatWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -43,5 +43,34 @@ namespace AkilliFiyatWeb.Services
             }
         }
 
+        public async Task<string?> MigrosApiAsync(string searchTerm, string reid)
+        {
+            // API endpoint'i
+            var apiUrl = $"https://www.migros.com.tr/rest/search/screens/products?q={searchTerm}&reid={reid}";
+
+            // HttpClient oluştur
+            using (HttpClient client = new HttpClient())
+            {
+                // User-Agent bilgisini belirle
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("MyCustomUserAgent/1.0");
+
+                // API'den veri al
+                var response = await client.GetAsync(apiUrl);
+
+                // Yanıtın içeriğini string olarak al
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    // Yanıt başarısızsa hata kodunu yazdır
+                    Console.WriteLine($"HTTP isteği başarısız oldu: {response.StatusCode}");
+                    // Yanıt başarısızsa null dön
+                    return null;
+                }
+            }
+        }
+
     }
 }

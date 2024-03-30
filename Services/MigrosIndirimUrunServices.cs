@@ -64,13 +64,15 @@ namespace AkilliFiyatWeb.Services
                             if (urun.badges != null && urun.badges.Count > 0 && urun.badges[0].value != null)
                             {
                                 eklenecekUrun.EskiFiyat = urun.badges[0].value;
-                                try {
+                                try
+                                {
                                     Decimal eskiFiyatDecimal = Convert.ToDecimal(eklenecekUrun.EskiFiyat.Replace("TL", "").Trim());
-                                Decimal indirimOran = ( eskiFiyatDecimal - result ) / eskiFiyatDecimal * 100;
-                                indirimOran = Math.Round(indirimOran,0);
-                                eklenecekUrun.IndirimOran = Convert.ToDouble(indirimOran);
+                                    Decimal indirimOran = (eskiFiyatDecimal - result) / eskiFiyatDecimal * 100;
+                                    indirimOran = Math.Round(indirimOran, 0);
+                                    eklenecekUrun.IndirimOran = Convert.ToDouble(indirimOran);
                                 }
-                                catch (Exception ex) {
+                                catch (Exception ex)
+                                {
 
                                 }
                             }
@@ -88,6 +90,77 @@ namespace AkilliFiyatWeb.Services
 
             await _dataContext.SaveChangesAsync();
             return indirimliMigrosUrunler;
+        }
+
+        public async Task<List<Urunler>> MigrosKayit(string query, string reid)
+        {
+            List<Urunler> migrosUrunler = new List<Urunler>();
+
+
+            var migros = await _apiService.MigrosApiAsync(query, reid);
+
+            if (migros != null)
+            {
+                dynamic jsonResponse = JObject.Parse(migros);
+                if (jsonResponse != null && jsonResponse.data != null && jsonResponse.data.searchInfo != null && jsonResponse.data.searchInfo.storeProductInfos != null)
+                {
+                    foreach (var urun in jsonResponse.data.searchInfo.storeProductInfos)
+                    {
+                        decimal fiyat;
+                        decimal result = 0;
+                        if (decimal.TryParse(urun.shownPrice.ToString(), out fiyat))
+                        {
+                            result = fiyat / 100;
+                            string resultString = result.ToString();
+                        }
+                        else
+                        {
+                            fiyat = 0;
+                        }
+
+                        double fiyat2 = (double)fiyat / 100.0;
+                        string fiyat3 = fiyat2.ToString("0.00");
+
+                        Urunler eklenecekUrun = new Urunler
+                        {
+                            UrunAdi = urun.name,
+                            Fiyat = fiyat3 + " ₺",
+                            UrunResmi = urun.images[0].urls.PRODUCT_HD,
+                            MarketAdi = "Migros",
+                            MarketResmi = "/img/Migros.png",
+                            Benzerlik = 1.0,
+                            AyrintiLink = "https://www.migros.com.tr/" + urun.prettyName
+                        };
+
+                        if (urun.badges != null && urun.badges.Count > 0 && urun.badges[0].value != null)
+                        {
+                            eklenecekUrun.EskiFiyat = urun.badges[0].value;
+                            try
+                            {
+                                Decimal eskiFiyatDecimal = Convert.ToDecimal(eklenecekUrun.EskiFiyat.Replace("TL", "").Trim());
+                                Decimal indirimOran = (eskiFiyatDecimal - result) / eskiFiyatDecimal * 100;
+                                indirimOran = Math.Round(indirimOran, 0);
+                                eklenecekUrun.IndirimOran = Convert.ToDouble(indirimOran);
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+                        }
+
+                        migrosUrunler.Add(eklenecekUrun);
+                        await _dataContext.Urunler.AddAsync(eklenecekUrun);
+                    }
+                }
+            }
+            else
+            {
+                // API çağrısı başarısız oldu.
+            }
+
+
+            await _dataContext.SaveChangesAsync();
+            return migrosUrunler;
         }
     }
 
