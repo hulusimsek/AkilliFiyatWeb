@@ -177,6 +177,10 @@
       "PackagePath": "staticwebassets\\img\\5.jpg"
     },
     {
+      "Id": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\wwwroot\\img\\A-101.png",
+      "PackagePath": "staticwebassets\\img\\A-101.png"
+    },
+    {
       "Id": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\wwwroot\\img\\Bim.png",
       "PackagePath": "staticwebassets\\img\\Bim.png"
     },

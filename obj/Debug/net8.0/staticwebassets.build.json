@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "y6WZV/3D3AXH2CIouyh1zWQc1WzHpQ3sicnhB4PTxRI=",
+  "Hash": "BbpJ4Gy+qsoEqXT4tY7Emy15AM9N6Mff4FuT+6VeIjs=",
   "Source": "AkilliFiyatWeb",
   "BasePath": "_content/AkilliFiyatWeb",
   "Mode": "Default",
@@ -870,6 +870,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\5.jpg"
+    },
+    {
+      "Identity": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\wwwroot\\img\\A-101.png",
+      "SourceId": "AkilliFiyatWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\wwwroot\\",
+      "BasePath": "_content/AkilliFiyatWeb",
+      "RelativePath": "img/A-101.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\A-101.png"
     },
     {
       "Identity": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\wwwroot\\img\\about.jpg",

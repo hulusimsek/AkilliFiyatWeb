@@ -143,7 +143,7 @@
                               <a href="@urun.AyrintiLink">@urun.UrunAdi</a>
                             </h5>
                             <div class="product__item__price">
-                              $@urun.Fiyat <span>$@urun.EskiFiyat</span>
+                              @urun.Fiyat <span>@urun.EskiFiyat</span>
                             </div>
                           </div>
                         </div>
@@ -188,15 +188,17 @@
                       <img src="@product.UrunResmi" alt="@product.UrunAdi" />
                     </div>
                     <div class="latest-product__item__text">
-                      <h6>@product.UrunAdi</h6>
-                      <span
+                      <h6 class="pb-2" style="background-color:rgb(255, 251, 251);">@product.UrunAdi
+                        <span
                         style="
                           text-decoration: line-through;
                           font-size: smaller;
+                          background-color: rgb(255, 251, 251);
                         "
                         >@product.EskiFiyat</span
                       >
-                      <span>@product.Fiyat</span>
+                      <span style="background-color: rgb(255, 251, 251);">@product.Fiyat</span>
+                    </h6>
                     </div>
                   </a>
                   }

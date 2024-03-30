@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AkilliFiyatWeb.Models;
@@ -9,30 +10,17 @@ using AngleSharp;
 using AngleSharp.Dom;
 using HtmlAgilityPack;
 using System.Globalization;
-namespace AkilliFiyatWeb.Controllers;
 
-public class HomeController : Controller
+namespace AkilliFiyatWeb.Services
 {
-    private readonly MigrosIndirimUrunServices _migrosIndirimUrunServices;
-    private readonly DataContext _context;
-
-    [ActivatorUtilitiesConstructor]
-    public HomeController(MigrosIndirimUrunServices migrosIndirimUrunServices, DataContext context)
+    public class A101IndirimUrunServices
     {
-        _migrosIndirimUrunServices = migrosIndirimUrunServices;
+        private readonly DataContext _context;
+        public A101IndirimUrunServices(DataContext context)
+    {
         _context = context;
     }
-
-    public async Task<IActionResult> Index()
-    {
-        var urunler = await _context.Urunler.ToListAsync();
-        ViewBag.SiralanmisUrunler = urunler.Where(u => u.IndirimOran != null && u.IndirimOran != 0)
-                                   .OrderByDescending(u => u.IndirimOran)
-                                   .ToList();
-        return View(urunler);
-    }
-
-    public async Task<List<Urunler>> IndirimA101Kayit()
+        public async Task<List<Urunler>> IndirimA101Kayit()
     {
         var urunlerList = new List<Urunler>();
 
@@ -114,5 +102,6 @@ public class HomeController : Controller
         }
         await _context.SaveChangesAsync();
         return urunlerList;
+    }
     }
 }
