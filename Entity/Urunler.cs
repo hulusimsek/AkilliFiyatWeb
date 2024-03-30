@@ -24,6 +24,7 @@ namespace AkilliFiyatWeb.Entity
         Miktar = miktar;
         EskiFiyat = eskiFiyat;
         IndirimOran = indirimOran;
+        int commit;
     }
 
     public Urunler(string urunAdi, string fiyat, string urunResmi, string marketAdi, string marketResmi, double benzerlik, string ayrintiLink)
