@@ -8,6 +8,38 @@ namespace AkilliFiyatWeb.Entity
 {
     public class Urunler
     {
+        public Urunler()
+    {
+        // Boş constructor
+    }
+        public Urunler(string urunAdi, string fiyat, string urunResmi, string marketAdi, string marketResmi, double benzerlik, string ayrintiLink, int miktar , string eskiFiyat, double indirimOran)
+    {
+        UrunAdi = urunAdi;
+        Fiyat = fiyat;
+        UrunResmi = urunResmi;
+        MarketAdi = marketAdi;
+        MarketResmi = marketResmi;
+        Benzerlik = benzerlik;
+        AyrintiLink = ayrintiLink;
+        Miktar = miktar;
+        EskiFiyat = eskiFiyat;
+        IndirimOran = indirimOran;
+    }
+
+    public Urunler(string urunAdi, string fiyat, string urunResmi, string marketAdi, string marketResmi, double benzerlik, string ayrintiLink)
+    {
+        UrunAdi = urunAdi;
+        Fiyat = fiyat;
+        UrunResmi = urunResmi;
+        MarketAdi = marketAdi;
+        MarketResmi = marketResmi;
+        Benzerlik = benzerlik;
+        AyrintiLink = ayrintiLink;
+        Miktar = 0;
+        EskiFiyat = null;
+        IndirimOran = null;
+    }
+
         [Key]
         public int UrunlerId { get; set; }
         public string? UrunAdi { get; set; }
@@ -21,5 +53,9 @@ namespace AkilliFiyatWeb.Entity
         public string? EskiFiyat { get; set; }
         public double? IndirimOran { get; set; }
 
+        
+
     }
+
+    
 }

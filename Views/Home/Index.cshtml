@@ -1,142 +1,260 @@
 ﻿@model IEnumerable<Urunler>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  />
 
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-4">
-                <!-- Sol Taraftaki Search Bar -->
-                <input type="text" class="form-control" placeholder="Ara...">
+  <!-- Icon Font Stylesheet -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+
+  <!-- Libraries Stylesheet -->
+  <link href="~/lib/animate/animate.min.css" rel="stylesheet" />
+  <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+  <link href="~/css/style.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="~/css/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="~/css/font-awesome.min.css" type="text/css" />
+  <link rel="stylesheet" href="~/css/elegant-icons.css" type="text/css" />
+  <link rel="stylesheet" href="~/css/nice-select.css" type="text/css" />
+  <link rel="stylesheet" href="~/css/jquery-ui.min.css" type="text/css" />
+  <link rel="stylesheet" href="~/css/owl.carousel.min.css" type="text/css" />
+  <link rel="stylesheet" href="~/css/slicknav.min.css" type="text/css" />
+  <link rel="stylesheet" href="~/css/style.css" type="text/css" />
+
+  <!-- Navbar & Hero Start -->
+
+  <!-- Hero Section Begin -->
+  <section class="hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="hero__categories">
+            <div class="hero__categories__all">
+              <i class="fa fa-bars"></i>
+              <span>All departments</span>
             </div>
-            <div class="col-lg-8">
-                <!-- Sağ Taraftaki Carousel -->
-                <div id="multipleItemCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        @{
-                            var products = Model.Where(p => p.MarketAdi == "migros").ToList();
-                            for (int i = 0; i < products.Count; i += 3)
-                            {
-                                <div class="carousel-item @(i == 0 ? "active" : "")">
-                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2">
-                                        @for (int j = i; j < Math.Min(i + 3, products.Count); j++)
-                                        {
-                                            var product = products[j];
-                                            <div class="col">
-                                                <div class="card mb-3" style="width: 250px; height: 350px;">
-                                                    <div class="market-logo">
-                                                        <img src="@product.MarketResmi" alt="@product.MarketAdi" class="market-logo-img">
-                                                    </div>
-                                                    <img src="@product.UrunResmi" class="card-img-top" alt="@product.UrunAdi">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@product.UrunAdi</h5>
-                                                        <p class="card-text"><del>@product.EskiFiyat</del></p>
-                                                        <p class="card-text">@product.Fiyat</p>
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <a href="#" class="btn btn-sm btn-primary">Sepete Ekle</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                        }
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#multipleItemCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#multipleItemCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
+            <ul>
+              <li><a href="#">Fresh Meat</a></li>
+              <li><a href="#">Vegetables</a></li>
+              <li><a href="#">Fruit & Nut Gifts</a></li>
+              <li><a href="#">Fresh Berries</a></li>
+              <li><a href="#">Ocean Foods</a></li>
+              <li><a href="#">Butter & Eggs</a></li>
+              <li><a href="#">Fastfood</a></li>
+              <li><a href="#">Fresh Onion</a></li>
+              <li><a href="#">Papayaya & Crisps</a></li>
+              <li><a href="#">Oatmeal</a></li>
+              <li><a href="#">Fresh Bananas</a></li>
+            </ul>
+          </div>
         </div>
-
-
-        <div class="row">
-            <div class="col-lg-4">
-                <!-- Sol Taraftaki Search Bar -->
-            
-            </div>
-            <div class="col-lg-8">
-                <!-- Sağ Taraftaki Carousel -->
-                <div id="multipleItemCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        @{
-                            var products2 = Model.Where(p => p.MarketAdi == "carfoursa").ToList();
-                            for (int i = 0; i < products2.Count; i += 3)
-                            {
-                                <div class="carousel-item @(i == 0 ? "active" : "")">
-                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2">
-                                        @for (int j = i; j < Math.Min(i + 3, products2.Count); j++)
-                                        {
-                                            var product2 = products2[j];
-                                            <div class="col">
-                                                <div class="card mb-3" style="width: 250px; height: 350px;">
-                                                    <div class="market-logo">
-                                                        <img src="@product2.MarketResmi" alt="@product2.MarketAdi" class="market-logo-img">
-                                                    </div>
-                                                    <img src="@product2.UrunResmi" class="card-img-top" alt="@product2.UrunAdi">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@product2.UrunAdi</h5>
-                                                        <p class="card-text"><del>@product2.EskiFiyat</del></p>
-                                                        <p class="card-text">@product2.Fiyat</p>
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <a href="#" class="btn btn-sm btn-primary">Sepete Ekle</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                        }
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#multipleItemCarousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#multipleItemCarousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+        <div class="col-lg-9">
+          <div class="hero__search">
+            <div class="hero__search__form">
+              <form action="#">
+                <div class="hero__search__categories">
+                  All Categories
+                  <span class="arrow_carrot-down"></span>
                 </div>
+                <input type="text" placeholder="What do yo u need?" />
+                <button type="submit" class="site-btn">SEARCH</button>
+              </form>
             </div>
+            <div class="hero__search__phone">
+              <div class="hero__search__phone__icon">
+                <i class="fa fa-phone"></i>
+              </div>
+              <div class="hero__search__phone__text">
+                <h5>+65 11.188.888</h5>
+                <span>support 24/7 time</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg">
+            <div class="hero__text">
+              <span>FRUIT FRESH</span>
+              <h2>Vegetable <br />100% Organic</h2>
+              <p>Free Pickup and Delivery Available</p>
+              <a href="#" class="primary-btn">SHOP NOW</a>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    
-    <style>
-        .market-logo {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            padding: 5px;
-        }
-    
-        .market-logo-img {
-            width: 30px;
-            height: auto;
-        }
-    
-        .card-img-top {
-            max-width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-    
-        .card-body {
-            height: 100px; /* Kart içeriğinin yüksekliği */
-            overflow: hidden; /* İçeriğin taşmasını engeller */
-        }
-    
-        .card-footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-    </style>
-    
+  </section>
+  <!-- Hero Section End -->
+
+  @{ var SiralanmisUrunler = ViewBag.SiralanmisUrunler as List<Urunler
+    >; }
+
+    <section class="product spad pb-0" style="margin-bottom: 0px">
+      <div class="container">
+        <div class="row">
+          <div class="sidebar">
+            <div class="sidebar__item">
+              <div class="col-lg-12 col-md-7">
+                <div class="product__discount">
+                  <div class="section-title product__discount__title">
+                    <h2>Bu Fırsat Kaçmaz!</h2>
+                  </div>
+                  <div class="row">
+                    <div class="product__discount__slider owl-carousel">
+                      @foreach (var urun in SiralanmisUrunler) {
+                      <div class="col-lg-4">
+                        <div class="product__discount__item">
+                          <div
+                            class="product__discount__item__pic set-bg"
+                            data-setbg="@urun.UrunResmi"
+                          >
+                            <img
+                              src="@urun.MarketResmi"
+                              alt="Market Resmi"
+                              class="float-right mr-2"
+                              style="width: 50px"
+                            />
+                            <div class="product__discount__percent">
+                              -@urun.IndirimOran%
+                            </div>
+                            <ul class="product__item__pic__hover">
+                              <li>
+                                <a href="#"><i class="fa fa-heart"></i></a>
+                              </li>
+                              <li>
+                                <a href="#"><i class="fa fa-retweet"></i></a>
+                              </li>
+                              <li>
+                                <a href="#"
+                                  ><i class="fa fa-shopping-cart"></i
+                                ></a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="product__discount__item__text">
+                            <h5>
+                              <a href="@urun.AyrintiLink">@urun.UrunAdi</a>
+                            </h5>
+                            <div class="product__item__price">
+                              $@urun.Fiyat <span>$@urun.EskiFiyat</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="latest-product spad pb-0 px-4">
+      <div class="mx-4">
+        <div class="row">
+          @foreach (var market in Model.Select(p => p.MarketAdi).Distinct()) {
+          <div class="col-lg-3">
+            <div class="latest-product__text">
+              <img
+                src="~/img/@(market).png"
+                alt="Market Resmi"
+                class="float-left mr-2"
+                style="width: 50px"
+              />
+              <h4>@market</h4>
+
+              <div class="latest-product__slider owl-carousel">
+                @{ var products = Model.Where(p => p.MarketAdi ==
+                market).ToList(); for (int i = 0; i < products.Count; i += 3) {
+                <div class="latest-prdouct__slider__item">
+                  @for (int j = i; j < i + 3 && j < products.Count; j++) { var
+                  product = products[j];
+                  <a
+                    href="@product.AyrintiLink"
+                    target="_blank"
+                    class="latest-product__item"
+                  >
+                    <div class="latest-product__item__pic">
+                      <img src="@product.UrunResmi" alt="@product.UrunAdi" />
+                    </div>
+                    <div class="latest-product__item__text">
+                      <h6>@product.UrunAdi</h6>
+                      <span
+                        style="
+                          text-decoration: line-through;
+                          font-size: smaller;
+                        "
+                        >@product.EskiFiyat</span
+                      >
+                      <span>@product.Fiyat</span>
+                    </div>
+                  </a>
+                  }
+                </div>
+                } }
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="app_section">
+      <div class="container">
+        <div class="col-md-9 mx-auto">
+          <div class="row">
+            <div class="col-md-7 col-lg-8">
+              <div class="detail-box">
+                <h2><span style="color: white"> Get the</span> <br /></h2>
+                <p style="color: white">
+                  long established fact that a reader will be distracted by the
+                  readable content of a page when looking at its layout. The
+                  poin
+                </p>
+                <div class="app_btn_box">
+                  <a href="" class="mr-1">
+                    <img src="images/google_play.png" class="box-img" alt="" />
+                  </a>
+                  <a href="">
+                    <img src="images/app_store.png" class="box-img" alt="" />
+                  </a>
+                </div>
+                <a href="" class="download_btn"> Download Now </a>
+              </div>
+            </div>
+            <div class="col-md-5 col-lg-4">
+              <div class="img-box">
+                <img src="images/mobile.png" class="box-img" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Js Plugins -->
+    @section Scripts {
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/jquery-ui.min.js"></script>
+    <script src="~/js/jquery.slicknav.js"></script>
+    <script src="~/js/mixitup.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/main.js"></script>
+    }</Urunler
+  >
+</Urunler>

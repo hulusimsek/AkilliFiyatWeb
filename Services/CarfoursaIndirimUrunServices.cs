@@ -19,90 +19,107 @@ namespace AkilliFiyatWeb.Services
         }
 
         public async Task<List<Urunler>> IndirimCarfoursaKayit()
+    {
+        var urunlerList = new List<Urunler>();
+
+        try
         {
-            var urunlerArrayList = new List<Urunler>();
+            var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync("https://www.carrefoursa.com/");
+            var content = await response.Content.ReadAsStringAsync();
 
-            try
+            var htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(content);
+
+            var elements = htmlDocument.DocumentNode.SelectNodes("//div[contains(@class, 'product_click')]");
+
+            if (elements != null)
             {
-                var httpClient = new HttpClient();
-                var html = await httpClient.GetStringAsync("https://www.carrefoursa.com/");
-                var htmlDocument = new HtmlDocument();
-                htmlDocument.LoadHtml(html);
-
-                var productClicks = htmlDocument.DocumentNode.SelectNodes("//div[@class='product_click']");
-                if (productClicks != null)
+                foreach (var element in elements)
                 {
-                    foreach (var productClick in productClicks)
+                    try
                     {
-                        try
+                        var html = element.InnerHtml;
+                        var test = new HtmlDocument();
+                        test.LoadHtml(html);
+
+                        var itemNameElement = test.DocumentNode.SelectSingleNode(".//span[contains(@class, 'item-name')]");
+                        var itemPriceElement = test.DocumentNode.SelectSingleNode(".//span[contains(@class, 'item-price')]");
+                        var imgElement = test.DocumentNode.SelectSingleNode(".//img");
+                        var ayrintiLink = test.DocumentNode.SelectSingleNode(".//a");
+                        var itemEskiFiyat = test.DocumentNode.SelectSingleNode(".//span[contains(@class, 'priceLineThrough') and contains(@class, 'js-variant-price')]");
+
+                        if (itemNameElement != null && itemPriceElement != null && imgElement != null)
                         {
-                            var itemNameElement = productClick.SelectSingleNode(".//h2[@class='item-name']");
-                            var itemPriceElement = productClick.SelectSingleNode(".//span[@class='item-price']");
-                            var imgElement = productClick.SelectSingleNode(".//img");
+                            var itemName = itemNameElement.InnerText.Trim();
+                            var itemPrice = itemPriceElement.GetAttributeValue("content", "");
 
-                            if (itemNameElement != null && itemPriceElement != null && imgElement != null)
+
+
+                            int index = itemPrice.IndexOf('.') + 3; // Noktadan sonra 2 basamak
+                            itemPrice = itemPrice.Replace('.', ',');
+                            if (index < itemPrice.Length)
                             {
-                                var itemName = itemNameElement.InnerText.Trim();
-                                var itemPrice = itemPriceElement.GetAttributeValue("content", "");
-                                var dataSrc = imgElement.GetAttributeValue("data-src", "");
+                                itemPrice = itemPrice.Substring(0, index);
+                            }
 
-                                var ayrintiLink = productClick.SelectSingleNode(".//a");
-                                var ayrintLinkString = ayrintiLink != null ? "https://www.carrefoursa.com" + ayrintiLink.GetAttributeValue("href", "") : "";
+                            double itemPriceDouble = Convert.ToDouble(itemPrice);
+                            System.Console.WriteLine(itemPriceDouble);
+                            itemPriceDouble = Math.Round(itemPriceDouble, 2);
 
-                                var itemEskiFiyat = productClick.SelectSingleNode(".//span[@class='priceLineThrough js-variant-price']");
-                                if (itemEskiFiyat != null)
-                                {
-                                    var eskiFiyatString = itemEskiFiyat.InnerText.Trim().Split(new string[] { " TL" }, StringSplitOptions.RemoveEmptyEntries)[0];
-                                    Urunler eklenecekUrun = new Urunler
-                                    {
-                                        UrunAdi = itemName,
-                                        Fiyat = itemPrice + " ₺",
-                                        UrunResmi = dataSrc,
-                                        MarketAdi = "carfoursa",
-                                        MarketResmi = "https://seeklogo.com/images/M/Migros-logo-09BB1C8FEF-seeklogo.com.png",
-                                        Benzerlik = 1.0,
-                                        AyrintiLink = ayrintLinkString,
-                                        EskiFiyat = eskiFiyatString + " ₺"
-                                    
-                                    };
-                                    await _context.Urunler.AddAsync(eklenecekUrun);
 
-                                }
-                                else
-                                {
-                                    Urunler eklenecekUrun = new Urunler
-                                    {
-                                        UrunAdi = itemName,
-                                        Fiyat = itemPrice + " ₺",
-                                        UrunResmi = dataSrc,
-                                        MarketAdi = "carfoursa",
-                                        MarketResmi = "https://seeklogo.com/images/M/Migros-logo-09BB1C8FEF-seeklogo.com.png",
-                                        Benzerlik = 1.0,
-                                        AyrintiLink = ayrintLinkString,
-                                        EskiFiyat = null
-                                    
-                                    };
+                            System.Console.WriteLine(itemPriceDouble);
 
-                                    await _context.Urunler.AddAsync(eklenecekUrun);
-                                }
+                            var dataSrc = imgElement.GetAttributeValue("data-src", "");
+
+                            // Virgülü noktaya çevir
+
+
+
+                            var ayrintLinkString = "https://www.carrefoursa.com" + ayrintiLink.GetAttributeValue("href", "");
+                            ayrintLinkString = RemovePartFromUrl(ayrintLinkString, "/quickView");
+
+                            if (itemEskiFiyat != null)
+                            {
+                                var eskiFiyatString = itemEskiFiyat.InnerText.Trim().Split(" TL")[0];
+                                Double EskiFiyatDouble = Convert.ToDouble(eskiFiyatString);
+
+                                Double indirimOran =  ( EskiFiyatDouble - itemPriceDouble ) / EskiFiyatDouble * 100;
+                                indirimOran = Math.Round(indirimOran,0);
+
+                                var urun = new Urunler(itemName, itemPriceDouble + " \u20BA", dataSrc, "Carrefour-SA", "/img/Carrefour-SA.png", 0.0, ayrintLinkString, 0, eskiFiyatString + " \u20BA", indirimOran);
+                                urunlerList.Add(urun);
+                                _context.Urunler.Add(urun);
+                            }
+                            else
+                            {
+                                var urun = new Urunler(itemName, itemPriceDouble + " \u20BA", dataSrc, "Carrefour-SA", "https://sdgmapturkey.com/wp-content/uploads/carrefoursa.png", 0.0, ayrintLinkString);
+                                urunlerList.Add(urun);
+                                _context.Urunler.Add(urun);
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            await _context.SaveChangesAsync();
-
-            return urunlerArrayList;
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        await _context.SaveChangesAsync();
+
+        return urunlerList;
+    }
+
+    private string RemovePartFromUrl(string url, string partToRemove)
+    {
+        return url.Replace(partToRemove, "");
+    }
 
     }
 }

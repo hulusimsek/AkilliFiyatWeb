@@ -24,6 +24,10 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<ApiService>();
 builder.Services.AddScoped<MigrosIndirimUrunServices>();
 builder.Services.AddScoped<CarfoursaIndirimUrunServices>();
+builder.Services.AddScoped<BimIndirimUrunServices>();
+
+builder.Services.AddControllersWithViews();  
+builder.WebHost.UseStaticWebAssets();  
 
 var app = builder.Build();
 

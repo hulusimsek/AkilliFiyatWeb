@@ -36,9 +36,10 @@ namespace AkilliFiyatWeb.Services
                         foreach (var urun in jsonResponse.data.searchInfo.storeProductInfos)
                         {
                             decimal fiyat;
+                            decimal result = 0;
                             if (decimal.TryParse(urun.shownPrice.ToString(), out fiyat))
                             {
-                                decimal result = fiyat / 100;
+                                result = fiyat / 100;
                                 string resultString = result.ToString();
                             }
                             else
@@ -54,15 +55,24 @@ namespace AkilliFiyatWeb.Services
                                 UrunAdi = urun.name,
                                 Fiyat = fiyat3 + " ₺",
                                 UrunResmi = urun.images[0].urls.PRODUCT_HD,
-                                MarketAdi = "migros",
-                                MarketResmi = "https://seeklogo.com/images/M/Migros-logo-09BB1C8FEF-seeklogo.com.png",
+                                MarketAdi = "Migros",
+                                MarketResmi = "/img/Migros.png",
                                 Benzerlik = 1.0,
-                                AyrintiLink = urun.information
+                                AyrintiLink = "https://www.migros.com.tr/" + urun.prettyName
                             };
 
                             if (urun.badges != null && urun.badges.Count > 0 && urun.badges[0].value != null)
                             {
                                 eklenecekUrun.EskiFiyat = urun.badges[0].value;
+                                try {
+                                    Decimal eskiFiyatDecimal = Convert.ToDecimal(eklenecekUrun.EskiFiyat.Replace("TL", "").Trim());
+                                Decimal indirimOran = ( eskiFiyatDecimal - result ) / eskiFiyatDecimal * 100;
+                                indirimOran = Math.Round(indirimOran,0);
+                                eklenecekUrun.IndirimOran = Convert.ToDouble(indirimOran);
+                                }
+                                catch (Exception ex) {
+
+                                }
                             }
 
                             indirimliMigrosUrunler.Add(eklenecekUrun);

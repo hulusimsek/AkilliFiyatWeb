@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "o81Vqzlcep5fYSxXzQ6pegFvv1VltWDgKERvAMTyx76TEN79NhvvprIMpZDnJHMqIwDms5f+EA3WGpj/rmezeA==",
+  "dgSpecHash": "kPbMKRy61wGlXAnom4M/Wauh0GDGzu2yjOgRKeKc4Xc9Zsb5DieEfNPlOJeupzg1QImfd5Gnez5EM4UXxUtesA==",
   "success": true,
   "projectFilePath": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\AkilliFiyatWeb.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Hulusi\\.nuget\\packages\\anglesharp\\1.1.2\\anglesharp.1.1.2.nupkg.sha512",
     "C:\\Users\\Hulusi\\.nuget\\packages\\htmlagilitypack\\1.11.59\\htmlagilitypack.1.11.59.nupkg.sha512",
     "C:\\Users\\Hulusi\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Hulusi\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
@@ -58,7 +59,7 @@
     "C:\\Users\\Hulusi\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
     "C:\\Users\\Hulusi\\.nuget\\packages\\system.security.cryptography.protecteddata\\6.0.0\\system.security.cryptography.protecteddata.6.0.0.nupkg.sha512",
     "C:\\Users\\Hulusi\\.nuget\\packages\\system.security.permissions\\6.0.0\\system.security.permissions.6.0.0.nupkg.sha512",
-    "C:\\Users\\Hulusi\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512",
+    "C:\\Users\\Hulusi\\.nuget\\packages\\system.text.encoding.codepages\\8.0.0\\system.text.encoding.codepages.8.0.0.nupkg.sha512",
     "C:\\Users\\Hulusi\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
     "C:\\Users\\Hulusi\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512",
     "C:\\Users\\Hulusi\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",

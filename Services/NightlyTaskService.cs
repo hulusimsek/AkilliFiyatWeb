@@ -15,7 +15,7 @@ namespace AkilliFiyatWeb.Services
         public NightlyTaskService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _calismaZamani = new TimeSpan(13, 11, 0); // Saat 12:14
+            _calismaZamani = new TimeSpan(9, 34, 0); // Saat 12:14
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -37,6 +37,7 @@ namespace AkilliFiyatWeb.Services
                     var veritabaniBaglantisi = kapsam.ServiceProvider.GetRequiredService<DataContext>();
                     var migrosServisi = kapsam.ServiceProvider.GetRequiredService<MigrosIndirimUrunServices>();
                     var carfoursaServisi = kapsam.ServiceProvider.GetRequiredService<CarfoursaIndirimUrunServices>();
+                    var bimServisi = kapsam.ServiceProvider.GetRequiredService<BimIndirimUrunServices>();
 
                     try
                     {
@@ -46,6 +47,8 @@ namespace AkilliFiyatWeb.Services
                         await migrosServisi.IndirimMigrosKayit();
 
                         await carfoursaServisi.IndirimCarfoursaKayit();
+
+                        await bimServisi.IndirimBimKayit();
 
                         Console.WriteLine("GeceLikGorevServisi: Görevler başarıyla tamamlandı.");
                     }
