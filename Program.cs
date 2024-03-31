@@ -26,6 +26,8 @@ builder.Services.AddScoped<MigrosIndirimUrunServices>();
 builder.Services.AddScoped<CarfoursaIndirimUrunServices>();
 builder.Services.AddScoped<BimIndirimUrunServices>();
 builder.Services.AddScoped<A101IndirimUrunServices>();
+builder.Services.AddScoped<KelimeKontrol>();
+builder.Services.AddScoped<SokUrunServices>();
 
 builder.Services.AddControllersWithViews();  
 builder.WebHost.UseStaticWebAssets();  

@@ -193,6 +193,10 @@
       "PackagePath": "staticwebassets\\img\\Migros.png"
     },
     {
+      "Id": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\wwwroot\\img\\Sok.png",
+      "PackagePath": "staticwebassets\\img\\Sok.png"
+    },
+    {
       "Id": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\wwwroot\\img\\about.jpg",
       "PackagePath": "staticwebassets\\img\\about.jpg"
     },

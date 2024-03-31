@@ -14,10 +14,13 @@ namespace AkilliFiyatWeb.Services
         private readonly ApiService _apiService;
         private readonly DataContext _dataContext; // ApplicationDbContext'e bağlanacak bir context
 
-        public MigrosIndirimUrunServices(ApiService apiService, DataContext dataContext)
+        private readonly KelimeKontrol _kelimeKontrol;
+
+        public MigrosIndirimUrunServices(ApiService apiService, DataContext dataContext, KelimeKontrol kelimeKontrol)
         {
             _apiService = apiService;
             _dataContext = dataContext;
+            _kelimeKontrol = kelimeKontrol;
         }
 
         public async Task<List<Urunler>> IndirimMigrosKayit()
@@ -121,6 +124,12 @@ namespace AkilliFiyatWeb.Services
                         double fiyat2 = (double)fiyat / 100.0;
                         string fiyat3 = fiyat2.ToString("0.00");
 
+                        double benzerlikOrani = _kelimeKontrol.BenzerlikHesapla(_kelimeKontrol.ConvertTurkishToEnglish(query.ToString()), _kelimeKontrol.ConvertTurkishToEnglish(urun.name.ToString()));
+                                        int katSayi = _kelimeKontrol.IkinciKelime2(query,urun.name.ToString());
+                                        if(katSayi>0) {
+                                            benzerlikOrani += katSayi;
+                                        }
+
                         Urunler eklenecekUrun = new Urunler
                         {
                             UrunAdi = urun.name,
@@ -128,7 +137,7 @@ namespace AkilliFiyatWeb.Services
                             UrunResmi = urun.images[0].urls.PRODUCT_HD,
                             MarketAdi = "Migros",
                             MarketResmi = "/img/Migros.png",
-                            Benzerlik = 1.0,
+                            Benzerlik = benzerlikOrani,
                             AyrintiLink = "https://www.migros.com.tr/" + urun.prettyName
                         };
 
@@ -149,7 +158,7 @@ namespace AkilliFiyatWeb.Services
                         }
 
                         migrosUrunler.Add(eklenecekUrun);
-                        await _dataContext.Urunler.AddAsync(eklenecekUrun);
+                        System.Console.WriteLine(eklenecekUrun.UrunAdi + " " + eklenecekUrun.Benzerlik);
                     }
                 }
             }
@@ -159,7 +168,6 @@ namespace AkilliFiyatWeb.Services
             }
 
 
-            await _dataContext.SaveChangesAsync();
             return migrosUrunler;
         }
     }
