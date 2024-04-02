@@ -10,6 +10,7 @@ using AngleSharp.Dom;
 using HtmlAgilityPack;
 using System.Globalization;
 using System.Net;
+using Newtonsoft.Json.Linq;
 namespace AkilliFiyatWeb.Controllers;
 
 public class HomeController : Controller
@@ -18,20 +19,24 @@ public class HomeController : Controller
     private readonly DataContext _context;
     private readonly CarfoursaIndirimUrunServices _carfoursaIndirimUrunServices;
     private readonly SokUrunServices _sokUrunServices;
+    private readonly A101IndirimUrunServices _a101IndirimServices;
     private readonly KelimeKontrol _kelimeKontrol;
+	private readonly ApiService _apiService;
 
     [ActivatorUtilitiesConstructor]
-    public HomeController(MigrosIndirimUrunServices migrosIndirimUrunServices, DataContext context, CarfoursaIndirimUrunServices carfoursaIndirimUrunServices,
-                            SokUrunServices sokUrunServices, KelimeKontrol KelimeKontrol)
-    {
-        _migrosIndirimUrunServices = migrosIndirimUrunServices;
-        _context = context;
-        _carfoursaIndirimUrunServices = carfoursaIndirimUrunServices;
-        _sokUrunServices = sokUrunServices;
-        _kelimeKontrol = KelimeKontrol;
-    }
+	public HomeController(MigrosIndirimUrunServices migrosIndirimUrunServices, DataContext context, CarfoursaIndirimUrunServices carfoursaIndirimUrunServices,
+							SokUrunServices sokUrunServices, KelimeKontrol KelimeKontrol, A101IndirimUrunServices a101IndirimServices, ApiService apiService)
+	{
+		_migrosIndirimUrunServices = migrosIndirimUrunServices;
+		_context = context;
+		_carfoursaIndirimUrunServices = carfoursaIndirimUrunServices;
+		_sokUrunServices = sokUrunServices;
+		_kelimeKontrol = KelimeKontrol;
+		_a101IndirimServices = a101IndirimServices;
+		_apiService = apiService;
+	}
 
-    public async Task<IActionResult> Index()
+	public async Task<IActionResult> Index()
     {
         var urunler = await _context.Urunler.ToListAsync();
         ViewBag.SiralanmisUrunler = urunler.Where(u => u.IndirimOran != null && u.IndirimOran != 0)
@@ -51,6 +56,7 @@ public class HomeController : Controller
             _sonucUrunler.AddRange(await _migrosIndirimUrunServices.MigrosKayit(query, "1711827415305000067"));
             _sonucUrunler.AddRange(await _carfoursaIndirimUrunServices.CarfoursaKayit(query));
             _sonucUrunler.AddRange(await _sokUrunServices.SokKayit(query));
+            _sonucUrunler.AddRange(await _a101IndirimServices.A101Kayit(query));
 
             var siraliUrunler = _sonucUrunler
                                         .Where(u => u.Benzerlik != null && u.Benzerlik != 0)
@@ -69,4 +75,91 @@ public class HomeController : Controller
         // Arama sayfasını göster
         return View();
     }
+
+	public async Task<List<Urunler>> A101Kayit(string query)
+	{
+		List<Urunler> a101Urunler = new List<Urunler>();
+
+		query = "kola";
+		var a101 = await _apiService.A101ApiAsync(query, "100", "1");
+
+		if (a101 != null)
+		{
+			dynamic jsonResponse = JObject.Parse(a101);
+			Console.WriteLine(jsonResponse.ToString());
+			if (jsonResponse != null && jsonResponse.res != null && jsonResponse.res.Count > 0 && jsonResponse.res[0].page_content != null)
+			{
+				foreach (var eleman in jsonResponse.res[0].page_content)
+				{
+					string formatliDeger = $"{eleman.price:#.##} \u20BA";
+
+					var urunAdi = eleman.title.ToString();
+					if (urunAdi != null)
+					{
+                        await Console.Out.WriteLineAsync(urunAdi);
+                    }
+					else
+					{
+                        await Console.Out.WriteLineAsync("name null");
+                    }
+					var benzerlikOrani = _kelimeKontrol.BenzerlikHesapla(_kelimeKontrol.ConvertTurkishToEnglish(query), _kelimeKontrol.ConvertTurkishToEnglish(urunAdi));
+					var katSayi = _kelimeKontrol.IkinciKelime2(query, urunAdi);
+					if (katSayi > 0)
+					{
+						benzerlikOrani += katSayi;
+					}
+					string imageUrl = "";
+					foreach (var item in eleman.image)
+					{
+						if (item.imageType == "product")
+						{
+							imageUrl = item.url;
+						}
+					}
+					if (benzerlikOrani > 0.1)
+					{
+						var eklenecekUrun = new Urunler(urunAdi, formatliDeger,
+							imageUrl.ToString(), "A-101",
+							"img/A-101.png",
+							benzerlikOrani, eleman.seoUrl.ToString());
+						eklenecekUrun.EskiFiyat = ($"{eleman.Price} \u20BA");
+						eklenecekUrun.UrunlerId = eleman.id;
+
+						a101Urunler.Add(eklenecekUrun);
+					}
+				}
+			}
+			else
+			{
+				if (jsonResponse == null)
+				{
+					Console.WriteLine("--------------- jsonResponse null döndü");
+				}
+				else if (jsonResponse.res == null)
+				{
+					Console.WriteLine("--------------- jsonResponse.res null döndü");
+				}
+				else if (jsonResponse.res.Count == 0)
+				{
+					Console.WriteLine("--------------- jsonResponse.res boş döndü");
+				}
+				else if (jsonResponse.res[0] == null)
+				{
+					Console.WriteLine("--------------- jsonResponse.res[0] null döndü");
+				}
+				else if (jsonResponse.res[0].page_content == null)
+				{
+					Console.WriteLine("--------------- jsonResponse.res[0].page_content null döndü");
+				}
+
+			}
+		}
+		else
+		{
+			Console.WriteLine("başarsız");
+		}
+
+
+		return a101Urunler;
+	}
 }

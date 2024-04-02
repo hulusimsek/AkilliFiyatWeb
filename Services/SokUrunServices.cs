@@ -88,7 +88,6 @@ namespace AkilliFiyatWeb.Services
                             if (benzerlikOrani > 0.10)
                             {
                                 urunlerList.Add(new Urunler(urunAdi, $"{fiyat} \u20BA", dataSrc, "Şok", "/img/Sok.png", benzerlikOrani, ayrintLinkString, 0, null, 0));
-                                System.Console.WriteLine(urunAdi);
                             }
                             else
                             {

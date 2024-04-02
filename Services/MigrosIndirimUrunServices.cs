@@ -157,9 +157,7 @@ namespace AkilliFiyatWeb.Services
                             }
                         }
 
-                        migrosUrunler.Add(eklenecekUrun);
-                        System.Console.WriteLine(eklenecekUrun.UrunAdi + " " + eklenecekUrun.Benzerlik);
-                    }
+                        migrosUrunler.Add(eklenecekUrun);                    }
                 }
             }
             else
