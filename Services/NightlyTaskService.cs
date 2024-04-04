@@ -15,7 +15,7 @@ namespace AkilliFiyatWeb.Services
         public NightlyTaskService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _calismaZamani = new TimeSpan(11, 2, 0); // Saat 12:14
+            _calismaZamani = new TimeSpan(20, 32, 0); // Saat 12:14
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

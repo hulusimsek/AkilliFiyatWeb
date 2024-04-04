@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\AkilliFiyatWeb.csproj": {}
+    "C:\\Users\\Yiğit\\Desktop\\projemarket\\web\\AkilliFiyatWeb\\AkilliFiyatWeb.csproj": {}
   },
   "projects": {
-    "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\AkilliFiyatWeb.csproj": {
+    "C:\\Users\\Yiğit\\Desktop\\projemarket\\web\\AkilliFiyatWeb\\AkilliFiyatWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\AkilliFiyatWeb.csproj",
+        "projectUniqueName": "C:\\Users\\Yiğit\\Desktop\\projemarket\\web\\AkilliFiyatWeb\\AkilliFiyatWeb.csproj",
         "projectName": "AkilliFiyatWeb",
-        "projectPath": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\AkilliFiyatWeb.csproj",
-        "packagesPath": "C:\\Users\\Hulusi\\.nuget\\packages\\",
-        "outputPath": "D:\\Yazilim\\Web-2\\aspnet-core\\AkilliFiyatWeb\\obj\\",
+        "projectPath": "C:\\Users\\Yiğit\\Desktop\\projemarket\\web\\AkilliFiyatWeb\\AkilliFiyatWeb.csproj",
+        "packagesPath": "C:\\Users\\Yiğit\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yiğit\\Desktop\\projemarket\\web\\AkilliFiyatWeb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Hulusi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yiğit\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
