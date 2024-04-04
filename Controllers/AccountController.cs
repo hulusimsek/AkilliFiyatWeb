@@ -10,15 +10,17 @@ namespace AkilliFiyatWeb.Controllers
         private UserManager<AppUser> _userManager;
         private RoleManager<AppRole> _roleManager;
         private SignInManager<AppUser> _signInManager;
-    
+        private IEmailSender _emailSender;
         public AccountController(
             UserManager<AppUser> userManager, 
             RoleManager<AppRole> roleManager,
-            SignInManager<AppUser> signInManager)
+            SignInManager<AppUser> signInManager,
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _roleManager = roleManager; 
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         public IActionResult Login()
@@ -65,7 +67,7 @@ namespace AkilliFiyatWeb.Controllers
             }
             return View(model);
         }
-
+    
         public IActionResult Create()
         {
             return View();
@@ -90,6 +92,8 @@ namespace AkilliFiyatWeb.Controllers
                     var url = Url.Action("ConfirmEmail","Account", new { user.Id, token} );
 
                     // email
+                    // await _emailSender.SendEmailAsync(user.Email, "Hesap Onayı", $"Lütfen email hesabınızı onaylamak için linke <a href='http://localhost:5176{url}'>tıklayınız.</a>");
+
                     TempData["message"]  = "Email hesabınızdaki onay mailini tıklayınız."; 
                     return RedirectToAction("Login","Account");
                 }
@@ -102,12 +106,12 @@ namespace AkilliFiyatWeb.Controllers
             return View(model);
         }
 
-
         public async Task<IActionResult> ConfirmEmail(string Id, string token)
         {
             if(Id == null || token == null)
             {
-                return NotFound();
+                TempData["message"]  = "Geçersiz token bilgisi";
+                return View();
             }
 
             var user = await _userManager.FindByIdAsync(Id);
@@ -126,8 +130,46 @@ namespace AkilliFiyatWeb.Controllers
             TempData["message"]  = "Kullanıcı bulunamadı";
             return View();
         }
-    
-        
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult ForgotPassword()
+        {
+           return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string Email)
+        {
+            if(string.IsNullOrEmpty(Email))
+            {
+                TempData["message"] = "Eposta adresinizi giriniz.";
+                return View();
+            }
+
+            var user = await _userManager.FindByEmailAsync(Email);
+
+            if(user == null)
+            {
+                TempData["message"] = "Eposta adresiyle eşleşen bir kayıt yok.";
+                return View();
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            
+            var url = Url.Action("ResetPassword","Account", new { user.Id, token} );
+
+            await _emailSender.SendEmailAsync(Email, "Parola Sıfırlama", $"Parolanızı yenilemek için linke <a href='http://localhost:5034{url}'>tıklayınız.</a>.");
+
+            TempData["message"] = "Eposta adresinize gönderilen link ile şifrenizi sıfırlayabilirsiniz.";
+
+            return View();
+
+        }
 
     }
 }

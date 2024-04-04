@@ -139,14 +139,18 @@
                   <img src="img/language.png" alt="" />
                   <div>English</div>
                   <span class="arrow_carrot-down"></span>
-                  <ul>
-                    <li><a href="#">Spanis</a></li>
-                    <li><a href="#">English</a></li>
-                  </ul>
                 </div>
-                <div class="header__top__right__auth">
-                  <a asp-controller="Account" asp-action="Login"><i class="fa fa-user"></i> Giriş yap</a>
-                </div>
+                @if(User.Identity?.IsAuthenticated== true) {
+                  <div class="header__top__right__auth">
+                    @User.Identity.Name   <i class="fa fa-user"></i>
+                    <a style="display: inline;" asp-controller="Account" asp-action="Logout"> Çıkış yap</a>
+                  </div>
+                }
+                else {
+                  <div class="header__top__right__auth">
+                    <a asp-controller="Account" asp-action="Login"><i class="fa fa-user"></i> Giriş yap</a>
+                  </div>
+                }
               </div>
             </div>
           </div>
