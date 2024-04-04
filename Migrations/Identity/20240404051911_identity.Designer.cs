@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AkilliFiyatWeb.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20240404020558_identityUpdate2")]
-    partial class identityUpdate2
+    [Migration("20240404051911_identity")]
+    partial class identity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

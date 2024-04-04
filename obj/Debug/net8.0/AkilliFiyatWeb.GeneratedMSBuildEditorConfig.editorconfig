@@ -18,6 +18,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Yazilim\Web-2\aspnet-core\AkilliFiyatWeb
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Yazilim/Web-2/aspnet-core/AkilliFiyatWeb/Views/Account/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Yazilim/Web-2/aspnet-core/AkilliFiyatWeb/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Yazilim/Web-2/aspnet-core/AkilliFiyatWeb/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -48,10 +56,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Yazilim/Web-2/aspnet-core/AkilliFiyatWeb/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Yazilim/Web-2/aspnet-core/AkilliFiyatWeb/Views/Users/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Yazilim/Web-2/aspnet-core/AkilliFiyatWeb/Views/Users/Edit.cshtml]

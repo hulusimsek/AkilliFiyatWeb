@@ -1,8 +1,9 @@
 using AkilliFiyatWeb.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace AkilliFiyatWeb.Controllers
+namespace IdentityApp.Controllers
 {
     public  class RolesController:Controller
     {
@@ -14,9 +15,9 @@ namespace AkilliFiyatWeb.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_roleManager.Roles);
+            return View(await _roleManager.Roles.ToListAsync());
         }
 
         public IActionResult Create()

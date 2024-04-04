@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AkilliFiyatWeb.TagHelpers
 {
     [HtmlTargetElement("td", Attributes = "asp-role-users")]
-    public class RoleUsersTagHelper : TagHelper
+    public class RoleUsersTagHelper:TagHelper
     {
         private readonly RoleManager<AppRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;
@@ -21,23 +21,20 @@ namespace AkilliFiyatWeb.TagHelpers
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            
-                var role = await _roleManager.FindByIdAsync(RoleId);
-                var users = await _userManager.Users.ToListAsync();
-                var userNames = new List<string>();
+            var userNames = new List<string>();
+            var role = await _roleManager.FindByIdAsync(RoleId);
 
-                if (role != null && role.Name != null)
+            if(role != null && role.Name != null)
+            {
+                foreach(var user in await _userManager.Users.ToListAsync())
                 {
-                    foreach (var user in users)
+                    if(await _userManager.IsInRoleAsync(user, role.Name))
                     {
-                        if (await _userManager.IsInRoleAsync(user, role.Name))
-                        {
-                            userNames.Add(user.UserName ?? "");
-                        }
+                        userNames.Add(user.UserName ?? "");
                     }
-                    output.Content.SetHtmlContent(userNames.Count == 0 ? "kullanıcı yok" : setHtml(userNames));
                 }
-            
+                output.Content.SetHtmlContent(userNames.Count == 0 ? "kullanıcı yok": setHtml(userNames));
+            }
 
         }
 
@@ -46,8 +43,8 @@ namespace AkilliFiyatWeb.TagHelpers
             var html = "<ul>";
             foreach (var item in userNames)
             {
-                html += "<li>" + item + "</li>";
-            }
+                html += "<li>"+ item +"</li>";
+            } 
             html += "</ul>";
             return html;
         }

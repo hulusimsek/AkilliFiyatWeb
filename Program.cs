@@ -23,8 +23,7 @@ builder.Services.AddDbContext<IdentityContext>(options =>
 options.UseMySql(builder.Configuration["ConnectionStrings2:mysql_connection"], new MySqlServerVersion(new Version(8, 0, 30)))
 );
 
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<IdentityContext>().AddRoleManager<RoleManager<AppRole>>().AddUserManager<UserManager<AppUser>>().AddDefaultTokenProviders();
-
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options => {
     options.Password.RequiredLength = 6;
@@ -37,6 +36,13 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     options.Lockout.MaxFailedAccessAttempts = 5;
     });
+
+    builder.Services.ConfigureApplicationCookie(options => {
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.SlidingExpiration = true;
+    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+});
 
 builder.Services.AddHttpClient();
 
@@ -67,11 +73,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+    
+IdentitySeedData.IdentityTestUser(app);
 
 app.Run();

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AkilliFiyatWeb.Migrations.Identity
 {
     /// <inheritdoc />
-    public partial class identityUpdate2 : Migration
+    public partial class identity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
