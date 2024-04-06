@@ -27,6 +27,7 @@ nupkg/
 *.sln.docstates
 
 # Build results
+bin/Debug
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -41,3 +42,7 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+bin/Debug/net8.0/AkilliFiyatWeb.exe
+bin/Debug/net8.0/AkilliFiyatWeb.exe
+/bin
+/bin/Debug
